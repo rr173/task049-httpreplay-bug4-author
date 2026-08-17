@@ -118,6 +118,8 @@ func (r *Recorder) Replay(req Request) (Response, error) {
 	if err != nil {
 		return Response{}, err
 	}
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	e, ok := r.keys[k]
 	if !ok || len(e.responses) == 0 {
 		r.misses++
